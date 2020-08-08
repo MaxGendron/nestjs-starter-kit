@@ -12,6 +12,7 @@ import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const port = 3000;
 
   const corsOptions = {
     //Check if the origin is in the list of cors defined in the
@@ -52,7 +53,7 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter());
   app.setGlobalPrefix('api');
   app.enableCors(corsOptions);
-  await app.listen(3000);
+  await app.listen(port);
   Logger.log(`🚀 Server running on http://localhost:${port}`, 'Bootstrap');
 }
 bootstrap();
