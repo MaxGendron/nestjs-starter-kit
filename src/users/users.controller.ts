@@ -1,10 +1,13 @@
 import { Controller, Post, Body } from '@nestjs/common';
-import { QueryDto } from './models/query.dto';
-import { NewUserDto } from './models/new-user.dto';
-import { ValidateUserDto } from './models/validate-user.dto';
+import { QueryDto } from './models/dtos/query.dto';
+import { NewUserDto } from './models/dtos/new-user.dto';
+import { ValidateUserDto } from './models/dtos/validate-user.dto';
+import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
+  constructor(private usersService: UsersService) {}
+
   @Post()
   create(@Body() newUserDto: NewUserDto): string {
     return "create user";
