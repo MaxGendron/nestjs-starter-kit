@@ -6,6 +6,9 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 
+/*
+  Catching exception to add logging & custom status
+*/
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
