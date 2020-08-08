@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { HttpExceptionFilter } from './providers/http-exception.filter';
 import { CustomError } from './models/custom-error';
+import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -52,5 +53,6 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   app.enableCors(corsOptions);
   await app.listen(3000);
+  Logger.log(`🚀 Server running on http://localhost:${port}`, 'Bootstrap');
 }
 bootstrap();

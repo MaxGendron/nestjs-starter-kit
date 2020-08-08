@@ -4,6 +4,7 @@ import {
   ArgumentsHost,
   HttpException,
   HttpStatus,
+  Logger
 } from '@nestjs/common';
 
 /*
@@ -22,10 +23,10 @@ export class HttpExceptionFilter implements ExceptionFilter {
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
 
-    console.log(
+    Logger.error(
       `Error when executing route ${path}. Status: ${status}. Name: ${exception.name}.`,
     );
-    console.log(`Stack trace: ${exception.stack}.`);
+    Logger.error(`Stack trace: ${exception.stack}.`);
 
     response.status(status).send(exception.getResponse());
   }
