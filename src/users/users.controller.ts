@@ -1,7 +1,7 @@
 import { Controller, Post, Body } from '@nestjs/common';
-import { QueryDto } from 'src/models/query.dto';
-import { NewUserDto } from 'src/models/new-user.dto';
-import { ValidateUserDto } from 'src/models/validate-user.dto';
+import { QueryDto } from './models/query.dto';
+import { NewUserDto } from './models/new-user.dto';
+import { ValidateUserDto } from './models/validate-user.dto';
 
 @Controller('users')
 export class UsersController {
