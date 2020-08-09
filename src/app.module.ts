@@ -5,7 +5,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
-    UsersModule,
     ConfigModule.forRoot({isGlobal: true}),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
@@ -14,7 +13,8 @@ import { MongooseModule } from '@nestjs/mongoose';
         useNewUrlParser: true
       }),
       inject: [ConfigService],
-      })
+    }),
+    UsersModule
   ],
 })
 export class AppModule {}
