@@ -17,9 +17,10 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse();
     const request = ctx.getRequest();
     const path = request.url;
+    const status = exception.getStatus();
 
     Logger.error(
-      `Error when executing route ${path}. Status: ${exception.getStatus()}. Name: ${exception.name}.`,
+      `Error when executing route ${path}. Status: ${status}. Name: ${exception.name}.`,
     );
     Logger.error(`Stack trace: ${exception.stack}.`);
 
