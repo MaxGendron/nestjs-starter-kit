@@ -43,9 +43,9 @@ async function bootstrap() {
             }
           }
         });
-        return new HttpException(
+        throw new HttpException(
           new CustomError(HttpStatus.BAD_REQUEST, errorName, 'ValidationError'),
-          HttpStatus.BAD_REQUEST,
+          HttpStatus.BAD_REQUEST
         );
       },
     }),
