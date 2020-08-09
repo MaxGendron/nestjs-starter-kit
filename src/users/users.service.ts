@@ -17,7 +17,7 @@ export class UsersService {
     private jwtService: JwtService) {}
 
   //Create a new user
-  async create(newUserDto: NewUserDto): Promise<User> {
+  async create(newUserDto: NewUserDto): Promise<any> {
     //Check if the user already exist, if so return error
     //Sanity check, shouldn't happens since we're validating on the UI
     const count = await this.userModel.countDocuments({
@@ -41,7 +41,8 @@ export class UsersService {
     //Save the user
     const newUser = new this.userModel(newUserDto);
     newUser.save();
-    return newUser;
+    //Log the user
+    return this.login(newUser);
   }
 
   //Return a JWT Token and the username of the user
@@ -57,8 +58,11 @@ export class UsersService {
   }
 
   //Validate if a user exist by looking at the number of document returned by the query
-  exist(queryDto: QueryDto): string {
-    return "user exist";
+  async exist(queryDto: QueryDto): Promise<any> {
+    const count = await this.userModel.countDocuments(queryDto.query).exec();
+    return {
+      exist: count > 0
+    }
   }
 
   //Validate if the given credentials exist in the system

@@ -13,7 +13,7 @@ export class UsersController {
   ) {}
 
   @Post()
-  create(@Body() newUserDto: NewUserDto): Promise<User> {
+  create(@Body() newUserDto: NewUserDto): Promise<any> {
     return this.usersService.create(newUserDto);
   }
 
@@ -24,7 +24,7 @@ export class UsersController {
   }
 
   @Post('exist')
-  exist(@Body() queryDto: QueryDto): string {
+  exist(@Body() queryDto: QueryDto): Promise<any> {
     return this.usersService.exist(queryDto);
   }
 }
