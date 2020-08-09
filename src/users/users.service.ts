@@ -48,7 +48,7 @@ export class UsersService {
   //Return a JWT Token and the username of the user
   async login(user: User): Promise<any> {
     const token = this.jwtService.sign(
-      { username: user.username, _id: user._id },
+      { username: user.username, sub: user._id },
       { algorithm: 'HS512', expiresIn: '24h', issuer: this.configService.get<string>('JWT_ISSUER') }
     );
     return {
