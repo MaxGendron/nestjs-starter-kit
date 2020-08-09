@@ -44,6 +44,7 @@ export class UsersService {
     return newUser;
   }
 
+  //Return a JWT Token and the username of the user
   async login(user: User): Promise<any> {
     const token = this.jwtService.sign(
       { username: user.username, _id: user._id },
@@ -60,6 +61,7 @@ export class UsersService {
     return "user exist";
   }
 
+  //Validate if the given credentials exist in the system
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.findOne(username);
     //Verify password
