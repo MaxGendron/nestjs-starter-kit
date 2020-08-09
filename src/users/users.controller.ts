@@ -14,9 +14,9 @@ export class UsersController {
     return this.usersService.create(newUserDto);
   }
 
-  @Post('validate')
-  validate(@Body() validateUserDto: ValidateUserDto): string {
-    return this.usersService.validate(validateUserDto);
+  @Post('login')
+  login(@Body() validateUserDto: ValidateUserDto): string {
+    return this.usersService.login(validateUserDto);
   }
 
   @Post('exist')

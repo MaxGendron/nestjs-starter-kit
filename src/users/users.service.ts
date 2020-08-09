@@ -39,8 +39,8 @@ export class UsersService {
     return newUser.save();
   }
 
-  //Validate that the given username/password correspond to a user in the system
-  validate(validateUserDto: ValidateUserDto): string {
+  //Try to login the user by validating if he exist or not.
+  login(validateUserDto: ValidateUserDto): string {
     return "validate user";
   }
 
