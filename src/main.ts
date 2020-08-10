@@ -12,7 +12,7 @@ import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const port = 3000;
+  const port = +app.get('ConfigService').get('PORT');
 
   const corsOptions = {
     //Check if the origin is in the list of cors defined in the
