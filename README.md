@@ -33,8 +33,9 @@ Backend starter-kit for a MEAN stack app
   - BCRYPT_ROUND: number of round to use for the bcrypt.gensalt
   - PORT: port of the application
 
-## Run the server
+## Run the server (dev)
 
 ```sh
-npm start
+npm run start:dev
 ```
+For all the run config, see the package.json
