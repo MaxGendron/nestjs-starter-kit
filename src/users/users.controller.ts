@@ -22,7 +22,6 @@ export class UsersController {
     return this.usersService.login(req.user);
   }
 
-
   @Post('exist')
   exist(@Body() queryDto: QueryDto): Promise<any> {
     return this.usersService.exist(queryDto);
