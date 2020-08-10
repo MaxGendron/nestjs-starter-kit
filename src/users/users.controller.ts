@@ -4,7 +4,6 @@ import { QueryDto } from '../models/dtos/query.dto';
 import { NewUserDto } from './models/dtos/new-user.dto';
 import { UsersService } from './users.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -23,7 +22,7 @@ export class UsersController {
     return this.usersService.login(req.user);
   }
 
-  @UseGuards(JwtAuthGuard)
+
   @Post('exist')
   exist(@Body() queryDto: QueryDto): Promise<any> {
     return this.usersService.exist(queryDto);
