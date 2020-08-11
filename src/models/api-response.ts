@@ -3,9 +3,10 @@ import { ApiResponse } from "@nestjs/swagger";
 import { HttpStatus } from "@nestjs/common";
 import { CustomError } from "./custom-error";
 
-export const CustomApiBadRequestResponse = (description: string) =>
+export const CustomApiBadRequestResponse = (description?: string) =>
   ApiResponse({
-    description: `The provided parameter(s) is either missing or incorrect. / ${description}`,
+    description: description ? `The provided parameter(s) is either missing or incorrect. / ${description}`
+      : 'The provided parameter(s) is either missing or incorrect.',
     type: CustomError,
     status: HttpStatus.BAD_REQUEST
   });
