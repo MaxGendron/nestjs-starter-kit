@@ -5,13 +5,12 @@ import { NewUserDto } from './models/dtos/new-user.dto';
 import { UsersService } from './users.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { LoginDto } from './models/dtos/login.dto';
-import { ApiTags, ApiBody, ApiOperation, ApiCreatedResponse, ApiOkResponse, ApiQuery } from '@nestjs/swagger';
+import { ApiTags, ApiBody, ApiOperation, ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { LoggedUserResponseDto } from './models/dtos/Response/logged-user.response.dto';
 import { ExistReponseDto } from './models/dtos/Response/exist.response.dto';
-import { ApiValidationErrorResponse, ApiUnexpectedErrorResponse, CustomApiBadRequestResponse, CustomApiNotFoundResponse } from 'src/models/api-response';
+import { ApiUnexpectedErrorResponse, CustomApiBadRequestResponse, CustomApiNotFoundResponse } from 'src/models/api-response';
 
 @ApiTags('Users')
-@ApiValidationErrorResponse()
 @ApiUnexpectedErrorResponse()
 @Controller('users')
 export class UsersController {

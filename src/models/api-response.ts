@@ -5,14 +5,7 @@ import { CustomError } from "./custom-error";
 
 export const CustomApiBadRequestResponse = (description: string) =>
   ApiResponse({
-    description: description,
-    type: CustomError,
-    status: HttpStatus.BAD_REQUEST
-  });
-
-export const ApiValidationErrorResponse = () =>
-  ApiResponse({
-    description: 'The provided parameter(s) is either missing or incorrect.',
+    description: `The provided parameter(s) is either missing or incorrect. / ${description}`,
     type: CustomError,
     status: HttpStatus.BAD_REQUEST
   });
