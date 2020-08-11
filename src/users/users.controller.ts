@@ -1,10 +1,18 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { Controller, Post, Body, UseGuards, Request } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Request, Get, Param, Query, HttpCode } from '@nestjs/common';
 import { QueryDto } from '../models/dtos/query.dto';
 import { NewUserDto } from './models/dtos/new-user.dto';
 import { UsersService } from './users.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
+import { LoginDto } from './models/dtos/login.dto';
+import { ApiTags, ApiBody, ApiOperation, ApiCreatedResponse, ApiOkResponse, ApiQuery } from '@nestjs/swagger';
+import { LoggedUserResponseDto } from './models/dtos/Response/logged-user.response.dto';
+import { ExistReponseDto } from './models/dtos/Response/exist.response.dto';
+import { ApiValidationErrorResponse, ApiUnexpectedErrorResponse, CustomApiBadRequestResponse, CustomApiNotFoundResponse } from 'src/models/api-response';
 
+@ApiTags('Users')
+@ApiValidationErrorResponse()
+@ApiUnexpectedErrorResponse()
 @Controller('users')
 export class UsersController {
   constructor(
@@ -12,18 +20,27 @@ export class UsersController {
   ) {}
 
   @Post()
-  create(@Body() newUserDto: NewUserDto): Promise<any> {
+  @ApiOperation({ summary: 'Create User', description: 'Create a new User.' })
+  @ApiCreatedResponse({ description: 'The user has been created', type: LoggedUserResponseDto})
+  @CustomApiBadRequestResponse('Cannot Insert the requested user, verify your information.')
+  create(@Body() newUserDto: NewUserDto): Promise<LoggedUserResponseDto> {
     return this.usersService.create(newUserDto);
   }
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  login(@Request() req: any): Promise<any> {
+  @HttpCode(200)
+  @ApiBody({type: LoginDto})
+  @ApiOperation({ summary: 'Login a user', description: 'Try to login the user by validating if he exist or not.' })
+  @CustomApiNotFoundResponse('No usef was found for the given credentials.')
+  @ApiOkResponse({ description: 'The user exist and has a token was created', type: LoggedUserResponseDto})
+  login(@Request() req: any): Promise<LoggedUserResponseDto> {
     return this.usersService.login(req.user);
   }
 
-  @Post('exist')
-  exist(@Body() queryDto: QueryDto): Promise<any> {
+  @Get('exist')
+  @ApiOperation({ summary: 'Validate if a user exist', description: 'Validate if a user exist by looking at the number of document returned by the query.' })
+  getexist(@Query() queryDto: QueryDto): Promise<ExistReponseDto> {
     return this.usersService.exist(queryDto);
   }
 }

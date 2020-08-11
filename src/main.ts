@@ -9,10 +9,21 @@ import {
 import { HttpExceptionFilter } from './providers/http-exception.filter';
 import { CustomError } from './models/custom-error';
 import { Logger } from '@nestjs/common';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const port = +app.get('ConfigService').get('PORT');
+
+  //Swagger
+  const swaggerOptions = new DocumentBuilder()
+  .setTitle('Nestjs-Starter-Kit')
+  .setDescription('Starter kit of an nest-js app')
+  .setVersion('1.0.0')
+  .addServer(`http://localhost:${port}/api`,'Local')
+  .build();
+  const document = SwaggerModule.createDocument(app, swaggerOptions);
+  SwaggerModule.setup('api-docs', app, document);
 
   const corsOptions = {
     //Check if the origin is in the list of cors defined in the

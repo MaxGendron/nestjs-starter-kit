@@ -8,6 +8,8 @@ import { QueryDto } from '../models/dtos/query.dto';
 import { CustomError } from 'src/models/custom-error';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { LoggedUserResponseDto } from './models/dtos/Response/logged-user.response.dto';
+import { ExistReponseDto } from './models/dtos/Response/exist.response.dto';
 
 @Injectable()
 export class UsersService {
@@ -17,7 +19,7 @@ export class UsersService {
     private jwtService: JwtService) {}
 
   //Create a new user
-  async create(newUserDto: NewUserDto): Promise<any> {
+  async create(newUserDto: NewUserDto): Promise<LoggedUserResponseDto> {
     //Check if the user already exist, if so return error
     //Sanity check, shouldn't happens since we're validating on the UI
     const count = await this.userModel.countDocuments({
@@ -46,27 +48,22 @@ export class UsersService {
   }
 
   //Return a JWT Token and the username of the user
-  async login(user: User): Promise<any> {
+  async login(user: User): Promise<LoggedUserResponseDto> {
     const token = this.jwtService.sign(
       { username: user.username, sub: user._id },
       { algorithm: 'HS512', expiresIn: '24h', issuer: this.configService.get<string>('JWT_ISSUER') }
     );
-    return {
-      username: user.username,
-      token: token
-    };
+    return new LoggedUserResponseDto(user.username,token);
   }
 
   //Validate if a user exist by looking at the number of document returned by the query
-  async exist(queryDto: QueryDto): Promise<any> {
+  async exist(queryDto: QueryDto): Promise<ExistReponseDto> {
     const count = await this.userModel.countDocuments(queryDto.query).exec();
-    return {
-      exist: count > 0
-    }
+    return new ExistReponseDto(count > 0)
   }
 
   //Validate if the given credentials exist in the system
-  async validateUser(username: string, password: string): Promise<any> {
+  async validateUser(username: string, password: string): Promise<User> {
     const user = await this.findOne(username);
     //Verify password
     if (user) {
