@@ -10,12 +10,7 @@ export const CustomApiBadRequestResponse = (description: string) =>
     status: HttpStatus.BAD_REQUEST
   });
 
-export const CustomApiNotFoundResponse = (description: string) =>
-  ApiResponse({
-    description: description,
-    type: CustomError,
-    status: HttpStatus.BAD_REQUEST
-  });
+export const CustomApiNotFoundResponse = (description: string) => CustomApiBadRequestResponse(description);
 
 export const ApiUnexpectedErrorResponse = () =>
   ApiResponse({
