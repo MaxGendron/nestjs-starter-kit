@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { Controller, Post, Body, UseGuards, Request, Get, Param, Query, HttpCode } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Request, HttpCode } from '@nestjs/common';
 import { QueryDto } from '../models/dtos/query.dto';
 import { NewUserDto } from './models/dtos/new-user.dto';
 import { UsersService } from './users.service';
