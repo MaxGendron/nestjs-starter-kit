@@ -8,8 +8,8 @@ import { QueryDto } from '../models/dtos/query.dto';
 import { CustomError } from 'src/models/custom-error';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { LoggedUserResponseDto } from './models/dtos/Response/logged-user.response.dto';
-import { ExistReponseDto } from './models/dtos/Response/exist.response.dto';
+import { LoggedUserResponseDto } from './models/dtos/responses/logged-user.response.dto';
+import { ExistReponseDto } from '../models/dtos/responses/exist.response.dto';
 
 @Injectable()
 export class UsersService {
