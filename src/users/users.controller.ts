@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Controller, Post, Body, UseGuards, Request, HttpCode } from '@nestjs/common';
-import { QueryDto } from '../models/dtos/query.dto';
+import { QueryDto } from './models/dtos/query.dto';
 import { NewUserDto } from './models/dtos/new-user.dto';
 import { UsersService } from './users.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { LoginDto } from './models/dtos/login.dto';
 import { ApiTags, ApiBody, ApiOperation, ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { LoggedUserResponseDto } from './models/dtos/responses/logged-user.response.dto';
-import { ExistReponseDto } from '../models/dtos/responses/exist.response.dto';
+import { ExistReponseDto } from './models/dtos/responses/exist.response.dto';
 import { ApiUnexpectedErrorResponse, CustomApiBadRequestResponse, CustomApiNotFoundResponse } from 'src/models/api-response';
 
 @ApiTags('Users')
