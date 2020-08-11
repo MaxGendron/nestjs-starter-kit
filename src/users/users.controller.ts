@@ -32,7 +32,7 @@ export class UsersController {
   @HttpCode(200)
   @ApiBody({type: LoginDto})
   @ApiOperation({ summary: 'Login a user', description: 'Try to login the user by validating if he exist or not.' })
-  @CustomApiNotFoundResponse('No usef was found for the given credentials.')
+  @CustomApiNotFoundResponse('No user was found for the given credentials.')
   @ApiOkResponse({ description: 'The user exist and has a token was created', type: LoggedUserResponseDto})
   login(@Request() req: any): Promise<LoggedUserResponseDto> {
     return this.usersService.login(req.user);
