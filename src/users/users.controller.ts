@@ -40,7 +40,7 @@ export class UsersController {
   @Post('exist')
   @HttpCode(200)
   @ApiOperation({ summary: 'Validate if a user exist', description: 'Validate if a user exist by looking at the number of document returned by the query.' })
-  @ApiOkResponse({ description: 'The user exist.', type: LoggedUserResponseDto})
+  @ApiOkResponse({ description: 'The user exist.', type: ExistReponseDto})
   @CustomApiBadRequestResponse()
   getexist(@Body() queryDto: QueryDto): Promise<ExistReponseDto> {
     return this.usersService.exist(queryDto);
