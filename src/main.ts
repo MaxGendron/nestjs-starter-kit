@@ -1,3 +1,4 @@
+import * as express from 'express';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import {
@@ -9,7 +10,7 @@ import {
 import { HttpExceptionFilter } from './providers/http-exception.filter';
 import { CustomError } from './models/custom-error';
 import { Logger } from '@nestjs/common';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { SwaggerModule, DocumentBuilder, SwaggerCustomOptions } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -54,6 +55,7 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter());
   app.setGlobalPrefix('api');
   app.enableCors(corsOptions);
+  app.use(express.static('public'));
 
   //Swagger
   const swaggerOptions = new DocumentBuilder()
@@ -63,8 +65,11 @@ async function bootstrap() {
   .addServer(`http://localhost:${port}`,'Local')
   .addBearerAuth()
   .build();
+  const swaggerCustomOptions: SwaggerCustomOptions = {
+    customCssUrl: `http://localhost:${port}/swaggerUICustom.css`
+  };
   const document = SwaggerModule.createDocument(app, swaggerOptions);
-  SwaggerModule.setup('api-docs', app, document);
+  SwaggerModule.setup('api-docs', app, document, swaggerCustomOptions);
 
   await app.listen(port);
   Logger.log(`🚀 Server running on http://localhost:${port}`, 'Bootstrap');
