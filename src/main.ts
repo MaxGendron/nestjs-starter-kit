@@ -21,6 +21,7 @@ async function bootstrap() {
   .setDescription('Starter kit of an nest-js app')
   .setVersion('1.0.0')
   .addServer(`http://localhost:${port}/api`,'Local')
+  .addBearerAuth()
   .build();
   const document = SwaggerModule.createDocument(app, swaggerOptions);
   SwaggerModule.setup('api-docs', app, document);
