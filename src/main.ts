@@ -15,17 +15,6 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const port = +app.get('ConfigService').get('PORT');
 
-  //Swagger
-  const swaggerOptions = new DocumentBuilder()
-  .setTitle('Nestjs-Starter-Kit')
-  .setDescription('Starter kit of an nest-js app')
-  .setVersion('1.0.0')
-  .addServer(`http://localhost:${port}/api`,'Local')
-  .addBearerAuth()
-  .build();
-  const document = SwaggerModule.createDocument(app, swaggerOptions);
-  SwaggerModule.setup('api-docs', app, document);
-
   const corsOptions = {
     //Check if the origin is in the list of cors defined in the
     //env, if so let it pass otherwise return a error
@@ -65,6 +54,18 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter());
   app.setGlobalPrefix('api');
   app.enableCors(corsOptions);
+
+  //Swagger
+  const swaggerOptions = new DocumentBuilder()
+  .setTitle('Nestjs-Starter-Kit')
+  .setDescription('Starter kit of an nest-js app')
+  .setVersion('1.0.0')
+  .addServer(`http://localhost:${port}`,'Local')
+  .addBearerAuth()
+  .build();
+  const document = SwaggerModule.createDocument(app, swaggerOptions);
+  SwaggerModule.setup('api-docs', app, document);
+
   await app.listen(port);
   Logger.log(`🚀 Server running on http://localhost:${port}`, 'Bootstrap');
 }
