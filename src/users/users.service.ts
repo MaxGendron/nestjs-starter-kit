@@ -4,7 +4,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './models/schemas/user.schema';
 import { NewUserDto } from './models/dtos/new-user.dto';
-import { QueryDto } from './models/dtos/query.dto';
 import { CustomError } from 'src/models/custom-error';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
@@ -56,9 +55,15 @@ export class UsersService {
     return new LoggedUserResponseDto(user.username,token);
   }
 
-  //Validate if a user exist by looking at the number of document returned by the query
-  async exist(queryDto: QueryDto): Promise<ExistReponseDto> {
-    const count = await this.userModel.countDocuments(queryDto.query).exec();
+  //Validate if the email already exist
+  async validateEmail(email: string): Promise<ExistReponseDto> {
+    const count = await this.userModel.countDocuments({email: email}).exec();
+    return new ExistReponseDto(count > 0)
+  }
+
+  //Validate if the username already exist
+  async validateUsername(username: string): Promise<ExistReponseDto> {
+    const count = await this.userModel.countDocuments({username: username}).exec();
     return new ExistReponseDto(count > 0)
   }
 

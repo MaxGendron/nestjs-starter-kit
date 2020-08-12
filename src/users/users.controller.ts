@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { Controller, Post, Body, UseGuards, Request, HttpCode } from '@nestjs/common';
-import { QueryDto } from './models/dtos/query.dto';
+import { Controller, Post, Body, UseGuards, Request, HttpCode, Get, Query } from '@nestjs/common';
 import { NewUserDto } from './models/dtos/new-user.dto';
 import { UsersService } from './users.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
@@ -9,6 +8,7 @@ import { ApiTags, ApiBody, ApiOperation, ApiCreatedResponse, ApiOkResponse } fro
 import { LoggedUserResponseDto } from './models/dtos/responses/logged-user.response.dto';
 import { ExistReponseDto } from './models/dtos/responses/exist.response.dto';
 import { ApiUnexpectedErrorResponse, CustomApiBadRequestResponse, CustomApiNotFoundResponse } from 'src/models/api-response';
+import { ValidateUserPropertyValueDto, UserPropertyEnum } from './models/dtos/validate-user-property-value.dto';
 
 @ApiTags('Users')
 @ApiUnexpectedErrorResponse()
@@ -37,12 +37,14 @@ export class UsersController {
     return this.usersService.login(req.user);
   }
 
-  @Post('exist')
-  @HttpCode(200)
-  @ApiOperation({ summary: 'Validate if a user exist', description: 'Validate if a user exist by looking at the number of document returned by the query.' })
-  @ApiOkResponse({ description: 'The user exist.', type: ExistReponseDto})
+  @Get('validate')
+  @ApiOperation({ summary: 'Validate if a user property value exist', description: 'Validate if the value of the requested property alredy exist for a user.' })
+  @ApiOkResponse({ description: 'The user property value exist.', type: ExistReponseDto})
   @CustomApiBadRequestResponse()
-  exist(@Body() queryDto: QueryDto): Promise<ExistReponseDto> {
-    return this.usersService.exist(queryDto);
+  validatePropertyValue(@Query() query: ValidateUserPropertyValueDto): Promise<ExistReponseDto> {
+    if (query.property === UserPropertyEnum.Email)
+      return this.usersService.validateEmail(query.value);
+    else if (query.property === UserPropertyEnum.Username)
+      return this.usersService.validateUsername(query.value);
   }
 }
