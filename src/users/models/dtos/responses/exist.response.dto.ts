@@ -1,5 +1,7 @@
 export class ExistReponseDto {
-  constructor(
-    public exist: boolean
-  ) {}
+  exist: boolean
+
+  constructor(exist: boolean) {
+    this.exist = exist
+  }
 }

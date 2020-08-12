@@ -1,6 +1,12 @@
 export class LoggedUserResponseDto {
+  username: string;
+  token: string;
+
   constructor(
-    public username: string,
-    public token: string
-  ) {}
+    username : string,
+    token : string
+  ) {
+    this.username = username;
+    this.token = token;
+  }
 }

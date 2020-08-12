@@ -2,7 +2,6 @@ import { HttpStatus } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CustomError {
-
   @ApiProperty()
   statusCode: HttpStatus;
   @ApiProperty()
