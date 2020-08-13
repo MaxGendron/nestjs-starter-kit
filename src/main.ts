@@ -10,7 +10,11 @@ import {
 import { HttpExceptionFilter } from './providers/http-exception.filter';
 import { CustomError } from './models/custom-error';
 import { Logger } from '@nestjs/common';
-import { SwaggerModule, DocumentBuilder, SwaggerCustomOptions } from '@nestjs/swagger';
+import {
+  SwaggerModule,
+  DocumentBuilder,
+  SwaggerCustomOptions,
+} from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -19,15 +23,15 @@ async function bootstrap() {
   const corsOptions = {
     //Check if the origin is in the list of cors defined in the
     //env, if so let it pass otherwise return a error
-    origin: function (origin, callback) {
+    origin: function(origin, callback) {
       const cors_origin = app.get('ConfigService').get('CORS_ORIGIN');
       if (cors_origin.indexOf(origin) !== -1) {
-        callback(null, true)
+        callback(null, true);
       } else {
-        callback(new Error('Not allowed by CORS'))
+        callback(new Error('Not allowed by CORS'));
       }
     },
-    optionsSuccessStatus: 200
+    optionsSuccessStatus: 200,
   };
 
   /*
@@ -47,7 +51,7 @@ async function bootstrap() {
         });
         throw new HttpException(
           new CustomError(HttpStatus.BAD_REQUEST, errorName, 'ValidationError'),
-          HttpStatus.BAD_REQUEST
+          HttpStatus.BAD_REQUEST,
         );
       },
     }),
@@ -62,11 +66,11 @@ async function bootstrap() {
     .setTitle('Nestjs-Starter-Kit')
     .setDescription('Starter kit of an nest-js app')
     .setVersion('1.0.0')
-    .addServer(`http://localhost:${port}`,'Local')
+    .addServer(`http://localhost:${port}`, 'Local')
     .addBearerAuth()
     .build();
   const swaggerCustomOptions: SwaggerCustomOptions = {
-    customCssUrl: `http://localhost:${port}/swaggerUICustom.css`
+    customCssUrl: `http://localhost:${port}/swaggerUICustom.css`,
   };
   const document = SwaggerModule.createDocument(app, swaggerOptions);
   SwaggerModule.setup('api-docs', app, document, swaggerCustomOptions);

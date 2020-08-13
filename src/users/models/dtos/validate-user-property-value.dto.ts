@@ -1,8 +1,8 @@
-import { IsNotEmpty, IsEnum } from "class-validator";
+import { IsNotEmpty, IsEnum } from 'class-validator';
 
 export enum UserPropertyEnum {
   Username = 'username',
-  Email = 'email'
+  Email = 'email',
 }
 
 export class ValidateUserPropertyValueDto {
