@@ -8,7 +8,7 @@ Backend starter-kit for a MEAN stack app
 - Bcrypt
 - Mongoose
 - Passport
-- Swagger
+- Swagger & Swagger-UI (/api-docs)
 
 ### Prebuild code
 
