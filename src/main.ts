@@ -59,12 +59,12 @@ async function bootstrap() {
 
   //Swagger
   const swaggerOptions = new DocumentBuilder()
-  .setTitle('Nestjs-Starter-Kit')
-  .setDescription('Starter kit of an nest-js app')
-  .setVersion('1.0.0')
-  .addServer(`http://localhost:${port}`,'Local')
-  .addBearerAuth()
-  .build();
+    .setTitle('Nestjs-Starter-Kit')
+    .setDescription('Starter kit of an nest-js app')
+    .setVersion('1.0.0')
+    .addServer(`http://localhost:${port}`,'Local')
+    .addBearerAuth()
+    .build();
   const swaggerCustomOptions: SwaggerCustomOptions = {
     customCssUrl: `http://localhost:${port}/swaggerUICustom.css`
   };
