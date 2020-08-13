@@ -8,7 +8,7 @@ export enum UserPropertyEnum {
 export class ValidateUserPropertyValueDto {
   @IsNotEmpty()
   @IsEnum(UserPropertyEnum)
-  property: UserPropertyEnum
+  property: UserPropertyEnum;
   @IsNotEmpty()
-  value: string
+  value: string;
 }

@@ -58,13 +58,13 @@ export class UsersService {
   //Validate if the email already exist
   async validateEmail(email: string): Promise<ExistReponseDto> {
     const count = await this.userModel.countDocuments({email: email}).exec();
-    return new ExistReponseDto(count > 0)
+    return new ExistReponseDto(count > 0);
   }
 
   //Validate if the username already exist
   async validateUsername(username: string): Promise<ExistReponseDto> {
     const count = await this.userModel.countDocuments({username: username}).exec();
-    return new ExistReponseDto(count > 0)
+    return new ExistReponseDto(count > 0);
   }
 
   //Validate if the given credentials exist in the system
