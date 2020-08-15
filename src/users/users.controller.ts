@@ -27,10 +27,8 @@ import {
   CustomApiBadRequestResponse,
   CustomApiNotFoundResponse,
 } from 'src/models/api-response';
-import {
-  ValidateUserPropertyValueDto,
-  UserPropertyEnum,
-} from './models/dtos/validate-user-property-value.dto';
+import { ValidateUserPropertyValueDto } from './models/dtos/validate-user-property-value.dto';
+import { UserPropertyEnum } from './models/enum/user-property.enum';
 
 @ApiTags('Users')
 @ApiUnexpectedErrorResponse()
