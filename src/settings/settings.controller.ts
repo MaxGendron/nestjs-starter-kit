@@ -7,6 +7,7 @@ import {
   Delete,
   Get,
   HttpCode,
+  UseGuards,
 } from '@nestjs/common';
 import { SettingsService } from './settings.service';
 import {
@@ -19,17 +20,26 @@ import {
   ApiCreatedResponse,
   ApiOkResponse,
   ApiNoContentResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { SettingDto } from './models/dtos/setting.dto';
 import { Setting } from './models/schemas/setting.schema';
 import { MongoIdDto } from 'src/models/dtos/mongo-id.dto';
+import { JwtAuthGuard } from 'src/users/guards/jwt-auth.guard';
+import { Roles } from 'src/models/roles.decorator';
+import { RolesGuard } from 'src/users/guards/roles.guard';
+import { UserRoleEnum } from 'src/users/models/enum/user-role.enum';
 
 @ApiTags('Settings')
 @ApiUnexpectedErrorResponse()
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @Controller('settings')
 export class SettingsController {
   constructor(private settingsService: SettingsService) {}
 
+  @Roles(UserRoleEnum.Admin)
+  @UseGuards(RolesGuard)
   @Post()
   @ApiOperation({
     summary: 'Create setting',
@@ -46,6 +56,8 @@ export class SettingsController {
     return this.settingsService.createSetting(settingDto);
   }
 
+  @Roles(UserRoleEnum.Admin)
+  @UseGuards(RolesGuard)
   @Put(':id')
   @ApiOperation({
     summary: 'Update setting',
@@ -63,6 +75,8 @@ export class SettingsController {
     return this.settingsService.updateSetting(mongoIdDto.id, settingDto);
   }
 
+  @Roles(UserRoleEnum.Admin)
+  @UseGuards(RolesGuard)
   @Delete(':id')
   @HttpCode(204)
   @ApiOperation({
