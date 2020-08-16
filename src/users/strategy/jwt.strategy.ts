@@ -3,6 +3,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { User } from '../models/schemas/user.schema';
 
 //Using Passport.JWT strategy
 @Injectable()
@@ -15,7 +16,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: any) {
-    return { _id: payload.sub, username: payload.username };
+  //Return a "User", but since it's a schema can't explicitly return it
+  async validate(payload: any): Promise<any> {
+    return { _id: payload.sub, username: payload.username, role: payload.role };
   }
 }
