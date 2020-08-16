@@ -57,7 +57,7 @@ async function bootstrap() {
       },
     }),
   );
-  app.useGlobalFilters(new HttpExceptionFilter(), new MongoFilter);
+  app.useGlobalFilters(new HttpExceptionFilter(), new MongoFilter());
   app.setGlobalPrefix('api');
   app.enableCors(corsOptions);
   app.use(express.static('public'));
