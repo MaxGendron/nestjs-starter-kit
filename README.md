@@ -18,9 +18,9 @@ Backend starter-kit for a MEAN stack app
 - Cors
 - Error Handling with logging for HttpException
 - CustomError
-- Users module
+- Users module (with role)
 - Authentification with local/jwt strategy
-- Basic CRUD (Settings)
+- Basic CRUD (Settings) with Authorization
 
 ## Initialize from this repo
 
