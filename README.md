@@ -9,6 +9,9 @@ Backend starter-kit for a MEAN stack app
 - Mongoose
 - Passport
 - Swagger & Swagger-UI (/api-docs)
+- Prettier (
+```npm run format```
+)
 
 ### Prebuild code
 
@@ -17,6 +20,7 @@ Backend starter-kit for a MEAN stack app
 - CustomError
 - Users module
 - Authentification with local/jwt strategy
+- Basic CRUD (Settings)
 
 ## Initialize from this repo
 
