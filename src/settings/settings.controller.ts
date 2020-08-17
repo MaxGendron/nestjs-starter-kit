@@ -13,6 +13,7 @@ import { SettingsService } from './settings.service';
 import {
   ApiUnexpectedErrorResponse,
   CustomApiBadRequestResponse,
+  CustomApiNotFoundResponse,
 } from 'src/models/api-response';
 import {
   ApiTags,
@@ -52,6 +53,7 @@ export class SettingsController {
   @CustomApiBadRequestResponse(
     'Cannot Insert the requested item, duplicate key error on a attribute.',
   )
+  @CustomApiNotFoundResponse('No setting found.')
   createSetting(@Body() settingDto: SettingDto): Promise<Setting> {
     return this.settingsService.createSetting(settingDto);
   }
@@ -68,6 +70,7 @@ export class SettingsController {
     type: Setting,
   })
   @CustomApiBadRequestResponse()
+  @CustomApiNotFoundResponse('No setting found.')
   updateSetting(
     @Param() mongoIdDto: MongoIdDto,
     @Body() settingDto: SettingDto,
@@ -87,8 +90,9 @@ export class SettingsController {
     description: 'The setting has been deleted',
   })
   @CustomApiBadRequestResponse()
-  deleteSetting(@Param() mongoIdDto: MongoIdDto): void {
-    this.settingsService.deleteSetting(mongoIdDto.id);
+  @CustomApiNotFoundResponse('No setting found.')
+  async deleteSetting(@Param() mongoIdDto: MongoIdDto): Promise<void> {
+    await this.settingsService.deleteSetting(mongoIdDto.id);
   }
 
   @Get('/findbyname/:settingName')
@@ -100,6 +104,8 @@ export class SettingsController {
     description: 'The setting has been found and returned',
     type: Setting,
   })
+  @CustomApiBadRequestResponse()
+  @CustomApiNotFoundResponse('No setting found.')
   getSettingByName(@Param() settingDto: SettingDto): Promise<Setting> {
     return this.settingsService.getSettingByName(settingDto.settingName);
   }
@@ -114,6 +120,7 @@ export class SettingsController {
     type: Setting,
   })
   @CustomApiBadRequestResponse()
+  @CustomApiNotFoundResponse('No setting found.')
   getSettingById(@Param() mongoIdDto: MongoIdDto): Promise<Setting> {
     return this.settingsService.getSettingById(mongoIdDto.id);
   }
