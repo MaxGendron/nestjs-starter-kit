@@ -8,6 +8,7 @@ import { ThrowExceptionUtils } from 'src/utils/throw-exception.utils';
 @Injectable()
 export class SettingsService {
   private readonly entityType = 'User';
+  
   constructor(
     @InjectModel(Setting.name) private settingModel: Model<Setting>,
   ) {}

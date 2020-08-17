@@ -53,7 +53,6 @@ export class SettingsController {
   @CustomApiBadRequestResponse(
     'Cannot Insert the requested item, duplicate key error on a attribute.',
   )
-  @CustomApiNotFoundResponse('No setting found.')
   createSetting(@Body() settingDto: SettingDto): Promise<Setting> {
     return this.settingsService.createSetting(settingDto);
   }
