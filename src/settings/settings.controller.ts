@@ -1,20 +1,10 @@
-import {
-  Controller,
-  Body,
-  Post,
-  Put,
-  Param,
-  Delete,
-  Get,
-  HttpCode,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Body, Post, Put, Param, Delete, Get, HttpCode, UseGuards } from '@nestjs/common';
 import { SettingsService } from './settings.service';
 import {
   ApiUnexpectedErrorResponse,
   CustomApiBadRequestResponse,
   CustomApiNotFoundResponse,
-} from 'src/models/api-response';
+} from 'src/common/models/api-response';
 import {
   ApiTags,
   ApiOperation,
@@ -25,9 +15,9 @@ import {
 } from '@nestjs/swagger';
 import { SettingDto } from './models/dtos/setting.dto';
 import { Setting } from './models/schemas/setting.schema';
-import { MongoIdDto } from 'src/models/dtos/mongo-id.dto';
+import { MongoIdDto } from 'src/common/models/dtos/mongo-id.dto';
 import { JwtAuthGuard } from 'src/users/guards/jwt-auth.guard';
-import { Roles } from 'src/models/roles.decorator';
+import { Roles } from 'src/common/models/roles.decorator';
 import { RolesGuard } from 'src/users/guards/roles.guard';
 import { UserRoleEnum } from 'src/users/models/enum/user-role.enum';
 
@@ -50,9 +40,7 @@ export class SettingsController {
     description: 'The setting has been created',
     type: Setting,
   })
-  @CustomApiBadRequestResponse(
-    'Cannot Insert the requested item, duplicate key error on a attribute.',
-  )
+  @CustomApiBadRequestResponse('Cannot Insert the requested item, duplicate key error on a attribute.')
   createSetting(@Body() settingDto: SettingDto): Promise<Setting> {
     return this.settingsService.createSetting(settingDto);
   }
@@ -70,10 +58,7 @@ export class SettingsController {
   })
   @CustomApiBadRequestResponse()
   @CustomApiNotFoundResponse('No setting found.')
-  updateSetting(
-    @Param() mongoIdDto: MongoIdDto,
-    @Body() settingDto: SettingDto,
-  ): Promise<Setting> {
+  updateSetting(@Param() mongoIdDto: MongoIdDto, @Body() settingDto: SettingDto): Promise<Setting> {
     return this.settingsService.updateSetting(mongoIdDto.id, settingDto);
   }
 

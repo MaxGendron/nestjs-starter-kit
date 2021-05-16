@@ -3,15 +3,13 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { SettingDto } from './models/dtos/setting.dto';
 import { Setting } from './models/schemas/setting.schema';
-import { ThrowExceptionUtils } from 'src/utils/throw-exception.utils';
+import { ThrowExceptionUtils } from 'src/common/utils/throw-exception.utils';
 
 @Injectable()
 export class SettingsService {
   private readonly entityType = 'User';
 
-  constructor(
-    @InjectModel(Setting.name) private settingModel: Model<Setting>,
-  ) {}
+  constructor(@InjectModel(Setting.name) private settingModel: Model<Setting>) {}
 
   //Create a new setting
   createSetting(settingDto: SettingDto): Promise<Setting> {
@@ -21,9 +19,7 @@ export class SettingsService {
 
   //Update a existing setting
   async updateSetting(id: string, settingDto: SettingDto): Promise<Setting> {
-    const setting = await this.settingModel
-      .findByIdAndUpdate(id, settingDto, { new: true })
-      .exec();
+    const setting = await this.settingModel.findByIdAndUpdate(id, settingDto, { new: true }).exec();
     if (!setting) {
       ThrowExceptionUtils.notFoundException(this.entityType, id);
     }
@@ -40,15 +36,9 @@ export class SettingsService {
 
   //Get a setting by is name
   async getSettingByName(settingName: string): Promise<Setting> {
-    const setting = await this.settingModel
-      .findOne({ settingName: settingName })
-      .exec();
+    const setting = await this.settingModel.findOne({ settingName: settingName }).exec();
     if (!setting) {
-      ThrowExceptionUtils.notFoundException(
-        this.entityType,
-        settingName,
-        'settingName',
-      );
+      ThrowExceptionUtils.notFoundException(this.entityType, settingName, 'settingName');
     }
     return setting;
   }

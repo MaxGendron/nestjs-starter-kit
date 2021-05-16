@@ -1,15 +1,15 @@
 import * as bcrypt from 'bcrypt';
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './models/schemas/user.schema';
 import { NewUserDto } from './models/dtos/new-user.dto';
-import { CustomError } from 'src/models/custom-error';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { LoggedUserResponseDto } from './models/dtos/responses/logged-user.response.dto';
 import { ExistReponseDto } from './models/dtos/responses/exist.response.dto';
 import { UserRoleEnum } from './models/enum/user-role.enum';
+import { ThrowExceptionUtils } from 'src/common/utils/throw-exception.utils';
 
 @Injectable()
 export class UsersService {
@@ -30,26 +30,18 @@ export class UsersService {
       .exec();
 
     if (count > 0) {
-      throw new HttpException(
-        new CustomError(
-          HttpStatus.BAD_REQUEST,
-          'CannotInsert',
-          'Cannot Insert the requested user, verify your information',
-        ),
-        HttpStatus.BAD_REQUEST,
-      );
+      ThrowExceptionUtils.cannotInsert('Cannot Insert the requested user, verify your information');
     }
 
     //Encrypt the password
-    const salt = await bcrypt.genSalt(
-      +this.configService.get<number>('BCRYPT_ROUND'),
-    );
+    const salt = await bcrypt.genSalt(+this.configService.get<number>('BCRYPT_ROUND'));
     newUserDto.password = await bcrypt.hash(newUserDto.password, salt);
 
     //Save the user
     const newUser = new this.userModel(newUserDto);
     newUser.role = newUser.role ?? UserRoleEnum.User;
     newUser.save();
+
     //Log the user
     return this.login(newUser);
   }
@@ -75,9 +67,7 @@ export class UsersService {
 
   //Validate if the username already exist
   async validateUsername(username: string): Promise<ExistReponseDto> {
-    const count = await this.userModel
-      .countDocuments({ username: username })
-      .exec();
+    const count = await this.userModel.countDocuments({ username: username }).exec();
     return new ExistReponseDto(count > 0);
   }
 
